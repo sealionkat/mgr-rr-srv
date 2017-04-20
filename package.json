@@ -4,16 +4,23 @@
   "description": "Server for sealionkat/mgr-river-raid repository",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sealionkat/mgr-rr-srv.git"
   },
-  "author": "KF",
+  "author": "sealionkat",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/sealionkat/mgr-rr-srv/issues"
   },
-  "homepage": "https://github.com/sealionkat/mgr-rr-srv#readme"
+  "homepage": "https://github.com/sealionkat/mgr-rr-srv#readme",
+  "dependencies": {
+    "reinforcejs": "sealionkat/reinforcejs"
+  },
+  "devDependencies": {
+    "websocket": "^1.0.24"
+  }
 }
