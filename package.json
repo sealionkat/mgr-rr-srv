@@ -1,0 +1,19 @@
+{
+  "name": "mgr-rr-srv",
+  "version": "1.0.0",
+  "description": "Server for sealionkat/mgr-river-raid repository",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sealionkat/mgr-rr-srv.git"
+  },
+  "author": "KF",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sealionkat/mgr-rr-srv/issues"
+  },
+  "homepage": "https://github.com/sealionkat/mgr-rr-srv#readme"
+}
