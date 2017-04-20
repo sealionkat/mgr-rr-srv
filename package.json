@@ -18,9 +18,10 @@
   },
   "homepage": "https://github.com/sealionkat/mgr-rr-srv#readme",
   "dependencies": {
-    "reinforcejs": "sealionkat/reinforcejs"
+    "reinforcejs": "sealionkat/reinforcejs",
+    "websocket": "^1.0.24"
   },
   "devDependencies": {
-    "websocket": "^1.0.24"
+    "eslint": "^3.19.0"
   }
 }
