@@ -5,7 +5,7 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha *.test.js **/*.test.js",
     "start": "node server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc *.js **/*.js"
   },
@@ -24,6 +24,8 @@
     "websocket": "^1.0.24"
   },
   "devDependencies": {
-    "eslint": "^3.19.0"
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0"
   }
 }
