@@ -19,5 +19,13 @@ describe('geo utilis', () => {
     it('should return true', () => {
       expect(geo.intersectionDetect([0, 0, 0, 1], [-1, -0.5, 1, 0.5])).to.be.equal(true);
     });
-  })
+  });
+
+  describe('distance()', () => {
+    it('should return correct value', () => {
+      expect(geo.distance([0, 0], [0, 1])).to.be.equal(1);
+      expect(geo.distance([0, 0], [1, 0])).to.be.equal(1);
+      expect(geo.distance([0, 0], [1, 1])).to.be.within(1.414, 1.415);
+    });
+  });
 });
