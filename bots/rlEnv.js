@@ -1,6 +1,15 @@
+/* global require */
+const geo = require('../utils/geo');
+
 
 class RlEnv {
   constructor() {
+    this.sensorsConfig = {
+      count: 17,
+      len: 100,
+      dimensionality: 5
+    };
+    this.sensors = [];
 // agent parameter spec to play with (this gets eval()'d on Agent reset)
     const spec = {};
     spec.update = 'qlearn'; // qlearn | sarsa
@@ -13,11 +22,27 @@ class RlEnv {
     spec.tderror_clamp = 1.0; // for robustness
     spec.num_hidden_units = 100; // number of neurons in hidden layer
     const env = {};
-    env.getNumStates = () => 5;
+    env.getNumStates = () => this.sensorsConfig.count * this.sensorsConfig.dimensionality + 1;
     env.getMaxNumActions = () => 3;
 
     this.spec = spec;
     this.env = env;
+  }
+
+  computeSensors() {
+
+  }
+
+  computeReward() {
+
+  }
+
+  computeSensorFeedback(gameObjects) {
+
+  }
+
+  performEnvironmentComputations() {
+
   }
 }
 

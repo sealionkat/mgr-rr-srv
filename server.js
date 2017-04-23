@@ -42,6 +42,8 @@ wsServer.on('request', function(request) {
   console.log((new Date()) + ' Connection accepted.');
 
   connection.on('message', function(message) {
+    console.log('message', message);
+
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data);
       let timeoutId = null;
@@ -53,7 +55,7 @@ wsServer.on('request', function(request) {
           break;
         case RECEIVED_MESSAGES.BOT:
           console.log('bot!', data.data);
-          bot = new RandomBot();
+          //bot = new RandomBot();
           switch(data.data) {
             case 'random':
               bot = new RandomBot();

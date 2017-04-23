@@ -8,13 +8,9 @@ class RlBot extends Bot {
     super();
 
     this.pressedKey = null;
-    this.sensorsNo = 17;
-    this.sensorLen = 100;
-    this.sensorDimensionality = 5;
     this.rlEnv = new RlEnv();
     this.agent = new RL.DQNAgent(this.rlEnv.env, this.rlEnv.spec);
 
-    this.sensors = [];
     super.sayHello('Reinforcement Learning Bot');
   }
 
@@ -24,12 +20,28 @@ class RlBot extends Bot {
     };
   }
 
-  analyze() {
+  convertData2Array(data) {
+    /*
+    array structure:
+    for each object
+    - range (x, y)
+    - type {0, 1}
+    - velocity (vx, vy)
+    + velocity of player {-1, 0, 1}
+     */
+  }
 
+  analyze(receivedMessage, data) {
+    /*
+     var action = agent.act(s); // s is an array of length 8
+     //... execute action in environment and get the reward
+     agent.learn(reward); // the agent improves its Q,policy,model, etc. reward is a float
+     */
+    return SENT_MESSAGES.GETGAMESTATE;
   }
 
   firstStepMessage() {
-
+    return SENT_MESSAGES.GETGAMESTATE;
   }
   exportData() {
 
@@ -39,9 +51,7 @@ class RlBot extends Bot {
 
   }
 
-  computeSensorFeedback(gameObjects) {
 
-  }
 }
 
 module.exports = RlBot;
