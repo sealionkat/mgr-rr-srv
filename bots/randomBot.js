@@ -27,9 +27,9 @@ class RandomBot extends Bot {
           return SENT_MESSAGES.RELEASELEFT;
         } else if(data.x <= 30 && this.pressedKey === null) {
           return SENT_MESSAGES.MOVERIGHT;
-        } else if(data.x >= 418 && this.pressedKey !== null) {
+        } else if(data.x >= 417 && this.pressedKey !== null) {
           return SENT_MESSAGES.RELEASERIGHT;
-        } else if(data.x >= 418 && this.pressedKey === null) {
+        } else if(data.x >= 417 && this.pressedKey === null) {
           return SENT_MESSAGES.MOVELEFT;
         }
 
