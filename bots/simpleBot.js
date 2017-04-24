@@ -2,12 +2,12 @@ const {RECEIVED_MESSAGES, SENT_MESSAGES} = require('../messagesTypes');
 const Bot = require('./bot');
 
 
-class RandomBot extends Bot {
+class SimpleBot extends Bot {
   constructor() {
     super();
 
     this.pressedKey = null;
-    super.sayHello('RandomBot');
+    super.sayHello('SimpleBot');
   }
 
   analyze(receivedMessage, data) {
@@ -48,4 +48,4 @@ class RandomBot extends Bot {
   }
 }
 
-module.exports = RandomBot;
+module.exports = SimpleBot;

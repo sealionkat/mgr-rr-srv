@@ -1,6 +1,6 @@
 const WebSocketServer = require('websocket').server;
 const http = require('http');
-const RandomBot = require('./bots/randomBot');
+const SimpleBot = require('./bots/simpleBot');
 const RlBot = require('./bots/rlBot');
 const {RECEIVED_MESSAGES, SENT_MESSAGES} = require('./messagesTypes');
 const CONFIG = require('./config');
@@ -55,10 +55,9 @@ wsServer.on('request', function(request) {
           break;
         case RECEIVED_MESSAGES.BOT:
           console.log('bot!', data.data);
-          //bot = new RandomBot();
           switch(data.data) {
             case 'random':
-              bot = new RandomBot();
+              bot = new SimpleBot();
               break;
             case 'rl':
               console.log('rl')
@@ -76,7 +75,7 @@ wsServer.on('request', function(request) {
           console.log('idle', data.data);
           if(!gameover) {
             timeoutId = setTimeout(() => {
-              connection.sendUTF(bot.firstStepMessage());
+              connection.sendUTF(bot.firstStepMessage(data.data));
             }, CONFIG.TIMEOUT);
           }
           break;
@@ -86,6 +85,7 @@ wsServer.on('request', function(request) {
         case RECEIVED_MESSAGES.PRESSEDRIGHTKEY:
         case RECEIVED_MESSAGES.RELEASEDLEFTKEY:
         case RECEIVED_MESSAGES.RELEASEDRIGHTKEY:
+        case RECEIVED_MESSAGES.RELEASEDARROWKEY:
           if(!gameover) {
             timeoutId = setTimeout(() => {
               connection.sendUTF(bot.analyze(data.type, data.data));

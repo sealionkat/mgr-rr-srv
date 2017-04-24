@@ -22,27 +22,39 @@ class RlEnv {
     spec.tderror_clamp = 1.0; // for robustness
     spec.num_hidden_units = 100; // number of neurons in hidden layer
     const env = {};
-    env.getNumStates = () => this.sensorsConfig.count * this.sensorsConfig.dimensionality + 1;
+    /*
+    we need sensor data and player pos (x, y) and it's velocity (vx)
+     */
+    env.getNumStates = () => this.sensorsConfig.count * this.sensorsConfig.dimensionality + 3;
+    /*
+    0 - noop/stop
+    1 - left
+    2 - right
+     */
     env.getMaxNumActions = () => 3;
 
     this.spec = spec;
     this.env = env;
   }
 
+  convertData2Array(data) {
+    return [];
+  }
+
   computeSensors() {
 
   }
 
-  computeReward() {
-
+  computeReward(data) {
+    return 0;
   }
 
   computeSensorFeedback(gameObjects) {
 
   }
 
-  performEnvironmentComputations() {
-
+  performEnvironmentActions(data) {
+    return this.convertData2Array({});
   }
 }
 

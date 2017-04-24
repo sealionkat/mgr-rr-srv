@@ -10,7 +10,8 @@ module.exports = {
     PRESSEDLEFTKEY: 'pressedLeftKey',
     PRESSEDRIGHTKEY: 'pressedRightKey',
     RELEASEDLEFTKEY: 'releasedLeftKey',
-    RELEASEDRIGHTKEY: 'releasedRightKey'
+    RELEASEDRIGHTKEY: 'releasedRightKey',
+    RELEASEDARROWKEY: 'releasedArrowKey'
   },
   SENT_MESSAGES: {
     HANDSHAKE: 'handshake',
@@ -21,6 +22,7 @@ module.exports = {
     RELEASELEFT: 'releaseleft',
     MOVERIGHT: 'moveright',
     RELEASERIGHT: 'releaseright',
+    RELEASEARROWKEY: 'releasearrowkey',
     GETPLAYERPOS: 'getplayerpos',
     GETBOARD: 'getboard'
   }
