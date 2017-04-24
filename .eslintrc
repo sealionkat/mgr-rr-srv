@@ -1,6 +1,10 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true
   },
   "rules": {
     "no-multi-spaces": "error",
