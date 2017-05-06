@@ -74,30 +74,30 @@ const geo = {
       let xn = x - G;
       let yn = y + H;
 
-      if (xn < eps) {
+      if (Math.abs(xn) < eps) {
         xn = 0;
       }
-      if (yn < eps) {
+      if (Math.abs(yn) < eps) {
         yn = 0;
       }
 
-      return [xn, yn]
+      return [xn, yn];
     } else if (alpha === 90) {
       let yn = y + H;
 
-      if (yn < eps) {
+      if (Math.abs(yn) < eps) {
         yn = 0;
       }
 
       return [x, yn];
     } else { // alpha > 90
-      let xn = x + G;
+      let xn = x - G;
       let yn = y + H;
 
-      if (xn < eps) {
+      if (Math.abs(xn) < eps) {
         xn = 0;
       }
-      if (yn < eps) {
+      if (Math.abs(yn) < eps) {
         yn = 0;
       }
 

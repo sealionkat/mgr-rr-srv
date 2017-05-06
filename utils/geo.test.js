@@ -53,6 +53,10 @@ describe('geo utilis', () => {
   });
 
   describe('computeSecondArcPoint()', () => {
-    // todo
+    it('should return correct values', () => {
+      expect(geo.computeSecondArcPoint(0, 0, 0, 100)).to.deep.equal([-100, 0]);
+      expect(geo.computeSecondArcPoint(0, 0, 180, 100)).to.deep.equal([100, 0]);
+      expect(geo.computeSecondArcPoint(0, 0, 90, 100)).to.deep.equal([0, 100]);
+    });
   });
 });
