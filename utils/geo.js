@@ -1,3 +1,7 @@
+const {sin, cos, PI} = Math;
+const deg1 = PI / 180;
+const rad1 = 180 / PI;
+
 const geo = {
   intersectionDetect(seg1, seg2) {
     if (typeof seg1 === 'undefined' || typeof seg2 === 'undefined') {
@@ -53,6 +57,25 @@ const geo = {
     }
 
     return null;
+  },
+  deg2rad(deg) {
+    return deg * deg1;
+  },
+  rad2deg(rad) {
+    return rad * rad1;
+  },
+  computeSecondArcPoint(x, y, alpha, L) {
+    const radAlpha = geo.deg2rad(alpha);
+    const H = L * sin(radAlpha);
+    const G = L * cos(radAlpha);
+
+    if (alpha < 90) {
+      return [x - G, y + H]
+    } else if (alpha === 90) {
+      return [x, y + H];
+    } else { // alpha > 90
+      return [x + G, y + H];
+    }
   }
 };
 
