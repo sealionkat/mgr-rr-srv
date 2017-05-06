@@ -1,6 +1,7 @@
 const {sin, cos, PI} = Math;
 const deg1 = PI / 180;
 const rad1 = 180 / PI;
+const eps = 1e-13;
 
 const geo = {
   intersectionDetect(seg1, seg2) {
@@ -70,11 +71,37 @@ const geo = {
     const G = L * cos(radAlpha);
 
     if (alpha < 90) {
-      return [x - G, y + H]
+      let xn = x - G;
+      let yn = y + H;
+
+      if (xn < eps) {
+        xn = 0;
+      }
+      if (yn < eps) {
+        yn = 0;
+      }
+
+      return [xn, yn]
     } else if (alpha === 90) {
-      return [x, y + H];
+      let yn = y + H;
+
+      if (yn < eps) {
+        yn = 0;
+      }
+
+      return [x, yn];
     } else { // alpha > 90
-      return [x + G, y + H];
+      let xn = x + G;
+      let yn = y + H;
+
+      if (xn < eps) {
+        xn = 0;
+      }
+      if (yn < eps) {
+        yn = 0;
+      }
+
+      return [xn, yn];
     }
   }
 };
