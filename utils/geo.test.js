@@ -31,4 +31,28 @@ describe('geo utilis', () => {
       expect(geo.intersectionPoint([0, 0, 1, 1], [0, 1, 1, 0])).to.deep.equal([0.5, 0.5]);
     });
   });
+
+  describe('deg2rad()', () => {
+    it('should return correct value', () => {
+      expect(geo.deg2rad(90)).to.closeTo(Math.PI/2, 0.0001);
+      expect(geo.deg2rad(180)).to.closeTo(Math.PI, 0.0001);
+      expect(geo.deg2rad(45)).to.closeTo(Math.PI/4, 0.0001);
+      expect(geo.deg2rad(30)).to.closeTo(Math.PI/6, 0.0001);
+      expect(geo.deg2rad(60)).to.closeTo(Math.PI/3, 0.0001);
+    });
+  });
+
+  describe('rad2deg()', () => {
+    it('should return correct value', () => {
+      expect(geo.rad2deg(Math.PI)).to.closeTo(180, 0.0001);
+      expect(geo.rad2deg(Math.PI/2)).to.closeTo(90, 0.0001);
+      expect(geo.rad2deg(Math.PI/4)).to.closeTo(45, 0.0001);
+      expect(geo.rad2deg(Math.PI/6)).to.closeTo(30, 0.0001);
+      expect(geo.rad2deg(Math.PI/3)).to.closeTo(60, 0.0001);
+    });
+  });
+
+  describe('computeSecondArcPoint()', () => {
+    // todo
+  });
 });
