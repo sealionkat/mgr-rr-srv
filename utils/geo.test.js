@@ -28,6 +28,7 @@ describe('geo utilis', () => {
 
     it('should return array of coordinates', () => {
       expect(geo.intersectionPoint([0, 0, 2, 2], [0, 2, 2, 0])).to.deep.equal([1, 1]);
+      expect(geo.intersectionPoint([0, 0, 1, 1], [0, 1, 1, 0])).to.deep.equal([0.5, 0.5]);
     });
   });
 });
