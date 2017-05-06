@@ -35,21 +35,35 @@ class RlEnv {
 
     this.spec = spec;
     this.env = env;
+    this.computeSensors = this.computeSensors.bind(this);
   }
 
   convertData2Array(data) {
     return [];
   }
 
-  computeSensors() {
+  computeSensors(playerPos) {
+    const sensorsConfig = this.sensorsConfig;
+    const sensors = [];
+    const sectorsCount = sensorsConfig.count - 1;
+    const sectorAngle = 180 / sectorsCount;
+    const x = playerPos.x;
+    const y = playerPos.y;
+    let alpha = 0;
 
+    for(let i = 0; i <= sectorsCount; ++i, alpha += sectorAngle) {
+      const result = geo.computeSecondArcPoint(x, y, alpha, sensorsConfig.len);
+      sensors.push(result);
+    }
+
+    this.sensors = sensors;
   }
 
   computeReward(data) {
     return 0;
   }
 
-  computeSensorFeedback(gameObjects) {
+  computeSensorFeedback(playerPos, gameObjects) {
 
   }
 
