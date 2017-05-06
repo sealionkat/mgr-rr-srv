@@ -1,19 +1,8 @@
 const fs = require('fs');
 
-const fileManager = {
-  saveAgentKnowledge(knowledge) {
-    fs.writeFile('agentknowledge', JSON.stringify(knowledge), err => {
-      if (err) {
-        console.error('Saving file error', err.code);
-
-        return;
-      }
-
-      console.log('File saved');
-    });
-  },
-  loadAgentKnowledge() {
-    fs.readFile('agentknowledge', 'utf8', (err, data) => {
+const fileSystem = {
+  readFile(name) {
+    fs.readFile(name, 'utf8', (err, data) => {
       if (err) {
         console.error('File read error', err.code);
 
@@ -25,10 +14,8 @@ const fileManager = {
       return data;
     });
   },
-  saveStats(botName, stats) {
-    const timestamp = (new Date()).now();
-
-    fs.writeFile(botName + timestamp, JSON.stringify(stats), err => {
+  writeFile(name, content) {
+    fs.writeFile(name, JSON.stringify(content), err => {
       if (err) {
         console.error('Saving file error', err.code);
 
@@ -37,18 +24,45 @@ const fileManager = {
 
       console.log('File saved');
     });
-
   },
-  createDir(name) {
-    fs.mkdir('./' + name, err => {
+  appendFile(name, content) {
+    fs.appendFile(name, JSON.stringify(content), err => {
+      if (err) {
+        console.error('Appending file error', err.code);
+
+        return;
+      }
+
+      console.log('File saved');
+    });
+  },
+  createDir(path) {
+    fs.mkdir('./' + path, err => {
       if (err) {
         console.error('Creating dir error', err.code);
 
         return;
       }
 
-      console.log('Directory', name, 'created');
+      console.log('Directory', path, 'created');
     });
+  }
+};
+
+const fileManager = {
+  saveAgentKnowledge(knowledge) {
+    fileSystem.writeFile('agent-knowledge', knowledge);
+  },
+  loadAgentKnowledge() {
+    fileSystem.readFile('agent-knowledge');
+  },
+  saveStats(botName, stats) {
+    const timestamp = (new Date()).now();
+
+    fileSystem.writeFile(botName + timestamp, stats);
+  },
+  createDir(path) {
+    fileSystem.createDir(path);
   }
 };
 
