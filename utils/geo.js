@@ -31,6 +31,9 @@ const geo = {
   distance(p1, p2) {
     return Math.sqrt((p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]));
   },
+  distance2(p1, p2) {
+    return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+  },
   intersectionPoint(seg1, seg2) {
     if (typeof seg1 === 'undefined' || typeof seg2 === 'undefined') {
       throw new Error('lack of segment');
@@ -103,6 +106,9 @@ const geo = {
 
       return [xn, yn];
     }
+  },
+  isInCircle(xs, ys, radius, x, y) {
+    return geo.distance2([xs, ys], [x, y]) <= (radius * radius);
   }
 };
 

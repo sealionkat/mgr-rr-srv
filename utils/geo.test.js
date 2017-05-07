@@ -59,4 +59,13 @@ describe('geo utilis', () => {
       expect(geo.computeSecondArcPoint(0, 0, 90, 100)).to.deep.equal([0, 100]);
     });
   });
+
+  describe('isInCircle', () => {
+    it('should return correct boolean value', () => {
+      expect(geo.isInCircle(0, 0, 1, 2, 2)).to.equal(false);
+      expect(geo.isInCircle(0, 0, 1, 0.5, 0.5)).to.equal(true);
+      expect(geo.isInCircle(0, 0, 1, 1, 1)).to.equal(false);
+      expect(geo.isInCircle(0, 0, 1, 0, 1)).to.equal(true);
+    });
+  });
 });
