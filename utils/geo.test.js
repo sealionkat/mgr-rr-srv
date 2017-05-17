@@ -68,4 +68,15 @@ describe('geo utilis', () => {
       expect(geo.isInCircle(0, 0, 1, 0, 1)).to.equal(true);
     });
   });
+
+  describe('findRectVertices', () => {
+    it('should return correct array values', () => {
+      expect(geo.findRectVertices(0.5, 0.5, 1, 1)).deep.equal([
+        [1, 1],
+        [0, 1],
+        [0, 0],
+        [1, 0]
+      ]);
+    });
+  });
 });

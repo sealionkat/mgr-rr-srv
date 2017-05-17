@@ -109,6 +109,18 @@ const geo = {
   },
   isInCircle(xs, ys, radius, x, y) {
     return geo.distance2([xs, ys], [x, y]) <= (radius * radius);
+  },
+  findRectVertices(xs, ys, width, height) {
+    const halfWidth = width / 2;
+    const halfHeight = height / 2;
+    const vertices = []; // RB LB LU RU
+
+    vertices.push([xs + halfWidth, ys + halfHeight]); // RB
+    vertices.push([xs - halfWidth, ys + halfHeight]); // LB
+    vertices.push([xs - halfWidth, ys - halfHeight]); // LU
+    vertices.push([xs + halfWidth, ys - halfHeight]); // RU
+
+    return vertices;
   }
 };
 
