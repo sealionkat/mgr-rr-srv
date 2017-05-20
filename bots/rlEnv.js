@@ -60,11 +60,37 @@ class RlEnv {
   }
 
   computeReward(data) {
+    
+
     return 0;
   }
 
-  computeSensorFeedback(playerPos, gameObjects) {
+  filterNearestObjects(playerPos, gameObjects) {
+    const radius = this.sensorsConfig.len;
 
+    return gameObjects.filter(item => {
+      return geo.isInCircle(playerPos.x, playerPos.y, radius, item.pos.x, item.pos.y);
+    });
+  }
+
+  computeSensorFeedback(playerPos, gameObjects) {
+    const sensors = this.sensors;
+    const objects = this.filterNearestObjects(playerPos, gameObjects);
+    const sensorsFeedback = [];
+    const {x, y} = playerPos;
+
+    sensors.forEach(sensor => {
+      let minDistance = Number.MAX_SAFE_INTEGER; // search for nearest object
+      let nearestObject;
+
+      objects.forEach(item => {
+        const vertices = geo.findRectVertices(item.pos.x, item.pos.y, item.width, item.height);
+
+        let intersectionPoint = geo.intersectionPoint([sensor[0], sensor[1], x, y], [vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1]]);
+
+      });
+
+    });
   }
 
   performEnvironmentActions(data) {
