@@ -2,7 +2,7 @@ instrumentation:
   root: ./
   extensions:
   - '.js'
-  include-all-sources: true
+  include-all-sources: false
   excludes:
   - '*.test.js'
 reporting:
