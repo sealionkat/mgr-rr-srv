@@ -48,4 +48,26 @@ describe('Segment', () => {
       expect(s1.findIntersectionPoint(s2)).to.be.equal(null);
     });
   });
+
+  describe('toString()', () => {
+    it('should return string with segment points', () => {
+      const s = new Segment(new Point(0, 1), new Point(2, 3));
+
+      expect(s.toString()).to.be.equal('(0, 1), (2, 3)');
+    });
+  });
+
+  describe('toArray()', () => {
+    it('should return array with flatten coords', () => {
+      const s = new Segment(new Point(0, 1), new Point(2, 3));
+
+      expect(s.toArray()).to.be.deep.equal([0, 1, 2, 3]);
+    });
+
+    it('should return array of points', () => {
+      const s = new Segment(new Point(0, 1), new Point(2, 3));
+
+      expect(s.toArray(true)).to.be.deep.equal([[0, 1], [2, 3]]);
+    });
+  });
 });

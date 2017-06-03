@@ -47,7 +47,7 @@ module.exports = class Segment {
     return `${this.p1}, ${this.p2}`;
   }
 
-  toArray() {
-    return [this.p1.x, this.p1.y, this.p2.x, this.p2.y];
+  toArray(pointArray) {
+    return pointArray ? [this.p1.toArray(), this.p2.toArray()] : [this.p1.x, this.p1.y, this.p2.x, this.p2.y];
   }
 };

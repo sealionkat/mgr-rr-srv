@@ -30,4 +30,12 @@ describe('Point class', () => {
       expect(p.toString()).to.match(/(0, 0)/);
     });
   });
+
+  describe('toArray()', () => {
+    it('should return an array with point coords', () => {
+      const p = new Point(0, 1);
+
+      expect(p.toArray()).to.deep.equal([0, 1]);
+    });
+  });
 });
