@@ -1,7 +1,11 @@
-export default class Vec2 {
+module.exports = class Vec2 {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+  }
+
+  get coords() {
+    return {x: this.x, y: this.y};
   }
 
   get length() {
@@ -30,4 +34,4 @@ export default class Vec2 {
     this.x *= s;
     this.y *= s;
   }
-}
+};

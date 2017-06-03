@@ -1,4 +1,4 @@
-const Point = require('./point');
+const Point = require('./Point');
 
 module.exports = class Segment {
   constructor(p1, p2) {
@@ -45,5 +45,9 @@ module.exports = class Segment {
 
   toString() {
     return `${this.p1}, ${this.p2}`;
+  }
+
+  toArray() {
+    return [this.p1.x, this.p1.y, this.p2.x, this.p2.y];
   }
 };
