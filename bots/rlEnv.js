@@ -1,6 +1,7 @@
 /* global require */
 const geo = require('../utils/geo');
 const Point = require('../utils/Point');
+const Segment = require('../utils/Segment');
 
 const defaultSpec = {
   update: 'qlearn', // qlearn | sarsa
@@ -79,19 +80,36 @@ class RlEnv {
     const sensors = this.sensors;
     const objects = this.filterNearestObjects(playerPos, gameObjects);
     const sensorsFeedback = [];
-    const {x, y} = playerPos;
+    const playerPosPoint = new Point(playerPos.x, playerPos.y);
 
     sensors.forEach(sensor => {
-      let minDistance = Number.MAX_SAFE_INTEGER; // search for nearest object
-      let nearestObject;
+      let minDistance = Number.MAX_SAFE_INTEGER; // search for nearest object;
+      let nearestObject = null;
+      const sensorSegment = new Segment(playerPos, sensor);
 
       objects.forEach(item => {
-        const vertices = geo.findRectVertices(item.pos.x, item.pos.y, item.width, item.height);
+        const vertices = Point.coordsArray2PointsArray(geo.findRectVertices(item.pos.x, item.pos.y, item.width, item.height));
 
-        let intersectionPoint = new Point(geo.intersectionPoint([sensor[0], sensor[1], x, y], [vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1]]));
+        const itemSegment1 = new Segment(vertices[0], vertices[1]);
+        const itemSegment2 = new Segment(vertices[1], vertices[2]);
+        const itemSegment3 = new Segment(vertices[2], vertices[3]);
+        const itemSegment4 = new Segment(vertices[3], vertices[0]);
 
+        const segments = [itemSegment1, itemSegment2, itemSegment3, itemSegment4];
+
+        segments.forEach(segment => {
+          const intersectionPoint = sensorSegment.findIntersectionPoint(segment);
+
+          if (intersectionPoint !== null) {
+            const distance = playerPosPoint.distanceFromPoint(intersectionPoint);
+
+            if (distance < minDistance) {
+              minDistance = distance;
+              nearestObject = item;
+            }
+          }
+        });
       });
-
     });
   }
 
