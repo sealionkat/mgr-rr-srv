@@ -1,6 +1,18 @@
 /* global require */
 const geo = require('../utils/geo');
+const Point = require('../utils/Point');
 
+const defaultSpec = {
+  update: 'qlearn', // qlearn | sarsa
+  gamma: 0.9, // discount factor, [0, 1)
+  epsilon: 0.2, // initial epsilon for epsilon-greedy policy, [0, 1)
+  alpha: 0.01, // value function learning rate
+  experience_add_every: 10, // number of time steps before we add another experience to replay memory
+  experience_size: 5000, // size of experience replay memory
+  learning_steps_per_iteration: 20,
+  tderror_clamp: 1.0, // for robustness
+  num_hidden_units: 100 // number of neurons in hidden layer
+};
 
 class RlEnv {
   constructor() {
@@ -9,18 +21,9 @@ class RlEnv {
       len: 100,
       dimensionality: 5
     };
-    this.sensors = [];
+    this.sensors = []; // array of Point
 // agent parameter spec to play with (this gets eval()'d on Agent reset)
-    const spec = {};
-    spec.update = 'qlearn'; // qlearn | sarsa
-    spec.gamma = 0.9; // discount factor, [0, 1)
-    spec.epsilon = 0.2; // initial epsilon for epsilon-greedy policy, [0, 1)
-    spec.alpha = 0.01; // value function learning rate
-    spec.experience_add_every = 10; // number of time steps before we add another experience to replay memory
-    spec.experience_size = 5000; // size of experience replay memory
-    spec.learning_steps_per_iteration = 20;
-    spec.tderror_clamp = 1.0; // for robustness
-    spec.num_hidden_units = 100; // number of neurons in hidden layer
+    const spec = defaultSpec;
     const env = {};
     /*
     we need sensor data and player pos (x, y) and it's velocity (vx)
@@ -47,12 +50,11 @@ class RlEnv {
     const sensors = [];
     const sectorsCount = sensorsConfig.count - 1;
     const sectorAngle = 180 / sectorsCount;
-    const x = playerPos.x;
-    const y = playerPos.y;
+    const {x, y} = playerPos;
     let alpha = 0;
 
     for(let i = 0; i <= sectorsCount; ++i, alpha += sectorAngle) {
-      const result = geo.computeSecondArcPoint(x, y, alpha, sensorsConfig.len);
+      const result = new Point(geo.computeSecondArcPoint(x, y, alpha, sensorsConfig.len));
       sensors.push(result);
     }
 
@@ -86,7 +88,7 @@ class RlEnv {
       objects.forEach(item => {
         const vertices = geo.findRectVertices(item.pos.x, item.pos.y, item.width, item.height);
 
-        let intersectionPoint = geo.intersectionPoint([sensor[0], sensor[1], x, y], [vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1]]);
+        let intersectionPoint = new Point(geo.intersectionPoint([sensor[0], sensor[1], x, y], [vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1]]));
 
       });
 
