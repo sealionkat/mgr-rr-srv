@@ -19,6 +19,22 @@ describe('Point class', () => {
     });
   });
 
+  describe('coordsArray2PointsArray()', () => {
+    it('should return correct points array from coords array', () => {
+      const arr = Point.coordsArray2PointsArray([0, 1, 2, 3]);
+
+      expect(arr).to.have.length(2);
+      expect(arr).to.deep.equal([new Point(0, 1), new Point(2, 3)]);
+    });
+
+    it('should return correct points array from array coords array', () => {
+      const arr = Point.coordsArray2PointsArray([[0, 1], [2, 3]]);
+
+      expect(arr).to.have.length(2);
+      expect(arr).to.deep.equal([new Point(0, 1), new Point(2, 3)]);
+    });
+  });
+
   describe('distanceFromPoint()', () => {
     it('should return distance from point', () => {
       const p = new Point(0, 0);
