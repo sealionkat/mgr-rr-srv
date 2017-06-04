@@ -3,6 +3,22 @@ const Point = require('./Point');
 const expect = require('chai').expect;
 
 describe('Point class', () => {
+  describe('constructor()', () => {
+    it('should create Point from array of coords', () => {
+      const p = new Point([0, 1]);
+
+      expect(p.x).to.be.equal(0);
+      expect(p.y).to.be.equal(1);
+    });
+
+    it('should create Point from numbers', () => {
+      const p = new Point(0, 1);
+
+      expect(p.x).to.be.equal(0);
+      expect(p.y).to.be.equal(1);
+    });
+  });
+
   describe('distanceFromPoint()', () => {
     it('should return distance from point', () => {
       const p = new Point(0, 0);
