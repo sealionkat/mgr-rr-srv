@@ -110,6 +110,17 @@ class RlEnv {
           }
         });
       });
+
+      /*
+      - range (x, y)
+       - type {0, 1}, 0 - good, 1 - bad
+       - velocity (vx, vy)
+       */
+      if (nearestObject !== null) {
+        sensorsFeedback.push([nearestObject.pos.x, nearestObject.pos.y, nearestObject.localeCompare('enemy') ? 1 : 0, nearestObject.vel.x, nearestObject.vel.y]);
+      } else { // what to do if sensor is clean?
+
+      }
     });
   }
 
