@@ -5,10 +5,10 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha *.test.js **/*.test.js",
+    "test": "node ./node_modules/mocha/bin/mocha *.test.js **/*.test.js",
     "start": "node server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc *.js **/*.js",
-    "test-cover": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha *.test.js **/*.test.js"
+    "test-cover": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha *.test.js **/*.test.js"
   },
   "repository": {
     "type": "git",
