@@ -62,10 +62,23 @@ class RlEnv {
     this.sensors = sensors;
   }
 
-  computeReward(data) {
-    
+  computeReward(sensorsFeedback, playerPos) {
+    let reward = 0;
+    const playerPosPoint = new Point(playerPos.x, playerPos.y);
+    const sensorLength = this.sensorsConfig.len;
 
-    return 0;
+    for(let i = 0; i < sensorsFeedback.length; i += 5) {
+      const distance = playerPosPoint.distanceFromPoint(sensorsFeedback[i], sensorsFeedback[i + 1]);
+      const ratio = distance / sensorLength;
+
+      if (sensorsFeedback[i + 2] === 0) { // bad
+        reward -= 1 - ratio;
+      } else { // good
+        reward += 100 * (1 - ratio);
+      }
+    } 
+
+    return reward;
   }
 
   filterNearestObjects(playerPos, gameObjects) {
@@ -122,6 +135,8 @@ class RlEnv {
 
       }
     });
+
+    return sensorsFeedback;
   }
 
   performEnvironmentActions(data) {
