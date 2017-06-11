@@ -66,12 +66,13 @@ class RlEnv {
     let reward = 0;
     const playerPosPoint = new Point(playerPos.x, playerPos.y);
     const sensorLength = this.sensorsConfig.len;
+    const sensorDimensionality = this.sensorsConfig.dimensionality;
 
-    for(let i = 0; i < sensorsFeedback.length; i += 5) {
+    for(let i = 0; i < sensorsFeedback.length; i += sensorDimensionality) {
       const distance = playerPosPoint.distanceFromPoint(sensorsFeedback[i], sensorsFeedback[i + 1]);
       const ratio = distance / sensorLength;
 
-      if (sensorsFeedback[i + 2] === 0) { // bad
+      if (sensorsFeedback[i + 2] === 1) { // bad
         reward -= 1 - ratio;
       } else { // good
         reward += 100 * (1 - ratio);
@@ -101,7 +102,10 @@ class RlEnv {
       const sensorSegment = new Segment(playerPos, sensor);
 
       objects.forEach(item => {
-        const vertices = Point.coordsArray2PointsArray(geo.findRectVertices(item.pos.x, item.pos.y, item.width, item.height));
+        const vertices = Point
+          .coordsArray2PointsArray(
+            geo.findRectVertices(item.pos.x, item.pos.y, item.width, item.height)
+          );
 
         const itemSegment1 = new Segment(vertices[0], vertices[1]);
         const itemSegment2 = new Segment(vertices[1], vertices[2]);
@@ -130,7 +134,13 @@ class RlEnv {
        - velocity (vx, vy)
        */
       if (nearestObject !== null) {
-        sensorsFeedback.push([nearestObject.pos.x, nearestObject.pos.y, nearestObject.localeCompare('enemy') ? 1 : 0, nearestObject.vel.x, nearestObject.vel.y]);
+        sensorsFeedback.push([
+          nearestObject.pos.x,
+          nearestObject.pos.y,
+          nearestObject.localeCompare('enemy') ? 1 : 0,
+          nearestObject.vel.x,
+          nearestObject.vel.y
+        ]);
       } else { // what to do if sensor is clean?
 
       }
