@@ -42,10 +42,6 @@ class RlEnv {
     this.computeSensors = this.computeSensors.bind(this);
   }
 
-  convertData2Array(data) {
-    return [];
-  }
-
   computeSensors(playerPos) {
     const sensorsConfig = this.sensorsConfig;
     const sensors = [];
@@ -99,7 +95,7 @@ class RlEnv {
     sensors.forEach(sensor => {
       let minDistance = Number.MAX_SAFE_INTEGER; // search for nearest object;
       let nearestObject = null;
-      const sensorSegment = new Segment(playerPos, sensor);
+      const sensorSegment = new Segment(playerPosPoint, sensor);
 
       objects.forEach(item => {
         const vertices = Point
@@ -150,7 +146,9 @@ class RlEnv {
   }
 
   performEnvironmentActions(data) {
-    return this.convertData2Array({});
+    const sensorsFeedback = this.computeSensorFeedback(data.playerPos, data.gameObjects);
+
+    return sensorsFeedback;
   }
 }
 

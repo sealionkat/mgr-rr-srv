@@ -11,6 +11,10 @@ class RlBot extends Bot {
     this.rlEnv = new RlEnv();
     this.agent = new RL.DQNAgent(this.rlEnv.env, this.rlEnv.spec);
     this.lastReward = null;
+    this.lastAction = null;
+    this.rewards = [];
+    this.actions = [];
+    this.lastSensorsFeedback = null;
 
     super.sayHello('Reinforcement Learning Bot');
   }
@@ -19,6 +23,16 @@ class RlBot extends Bot {
     return {
 
     };
+  }
+
+  updateReward(reward) {
+    this.lastReward = reward;
+    this.rewards.push(reward);
+  }
+
+  updateAction(action) {
+    this.lastAction = action;
+    this.actions.push(action);
   }
 
   convertData2Array(data) {
@@ -37,9 +51,14 @@ class RlBot extends Bot {
   }
 
   analyze(receivedMessage, data) {
-    this.agent.learn(this.rlEnv.computeReward(data));
+    const reward = this.rlEnv.computeReward(this.lastSensorsFeedback, data.playerPos);
+    this.updateReward(reward);
+    this.agent.learn(reward);
 
-    const action = this.agent.act(this.convertData2Array(data));
+    const sensorsFeedback = this.rlEnv.performEnvironmentActions(data);
+    this.lastSensorsFeedback = sensorsFeedback;
+    const action = this.agent.act(sensorsFeedback);
+    this.updateAction(action);
     console.log('show action', action);
     /*
     0 - noop
@@ -60,12 +79,16 @@ class RlBot extends Bot {
 
   firstStepMessage(data) {
     /* first action is noop and reward for this action is 0 */
-    this.rlEnv.computeSensors();
+    this.rlEnv.computeSensors(data.playerPos);
 
-    const action = this.agent.act(this.rlEnv.performEnvironmentActions({}));
+    const sensorsFeedback = this.rlEnv.performEnvironmentActions(data);
+    const action = this.agent.act(sensorsFeedback);
+    this.lastSensorsFeedback = sensorsFeedback;
+    this.updateAction(action);
 
     return SENT_MESSAGES.GETGAMESTATE;
   }
+
   exportData() {
 
   }
