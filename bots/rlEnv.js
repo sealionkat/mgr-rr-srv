@@ -23,7 +23,6 @@ class RlEnv {
       dimensionality: 5
     };
     this.sensors = []; // array of Point
-// agent parameter spec to play with (this gets eval()'d on Agent reset)
     const spec = defaultSpec;
     const env = {};
     /*

@@ -19,12 +19,6 @@ class RlBot extends Bot {
     super.sayHello('Reinforcement Learning Bot');
   }
 
-  getBotConfig() {
-    return {
-
-    };
-  }
-
   updateReward(reward) {
     this.lastReward = reward;
     this.rewards.push(reward);
@@ -33,21 +27,6 @@ class RlBot extends Bot {
   updateAction(action) {
     this.lastAction = action;
     this.actions.push(action);
-  }
-
-  convertData2Array(data) {
-    /*
-    array structure:
-    for each object
-    - range (x, y)
-    - type {0, 1}, 0 - good, 1 - bad
-    - velocity (vx, vy)
-    + velocity of player {-1, 0, 1}
-     */
-    const {playerPos, gameObjects, playerVel} = data;
-    let arr = []; // length should be
-
-    return arr;
   }
 
   analyze(receivedMessage, data) {
@@ -96,8 +75,6 @@ class RlBot extends Bot {
   importData() {
 
   }
-
-
 }
 
 module.exports = RlBot;
