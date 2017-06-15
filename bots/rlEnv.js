@@ -137,7 +137,13 @@ class RlEnv {
           nearestObject.vel.y
         ]);
       } else { // what to do if sensor is clean?
-
+        sensorsFeedback.push([
+          Number.MAX_SAFE_INTEGER,
+          Number.MAX_SAFE_INTEGER,
+          -1,
+          0,
+          0
+        ]);
       }
     });
 
