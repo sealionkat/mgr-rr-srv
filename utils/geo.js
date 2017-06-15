@@ -93,19 +93,19 @@ const geo = {
       }
 
       return [x, yn];
-    } else { // alpha > 90
-      let xn = x - G;
-      let yn = y + H;
-
-      if (Math.abs(xn) < eps) {
-        xn = 0;
-      }
-      if (Math.abs(yn) < eps) {
-        yn = 0;
-      }
-
-      return [xn, yn];
     }
+    // alpha > 90
+    let xn = x - G;
+    let yn = y + H;
+
+    if (Math.abs(xn) < eps) {
+      xn = 0;
+    }
+    if (Math.abs(yn) < eps) {
+      yn = 0;
+    }
+
+    return [xn, yn];
   },
   isInCircle(xs, ys, radius, x, y) {
     return geo.distance2([xs, ys], [x, y]) <= (radius * radius);

@@ -20,10 +20,6 @@ describe('rlEnv', () => {
     });
   });
 
-  describe('convertData2Array()', () => {
-
-  });
-
   describe('computeSensors()', () => {
     it('should contain correct sensors array', () => {
       const r = new RlEnv();

@@ -1,4 +1,4 @@
-const {RECEIVED_MESSAGES, SENT_MESSAGES} = require('../messagesTypes');
+const {SENT_MESSAGES} = require('../messagesTypes');
 const Bot = require('./bot');
 const RL = require('../node_modules/reinforcejs/lib/rl');
 const RlEnv = require('./rlEnv');

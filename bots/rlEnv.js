@@ -72,7 +72,7 @@ class RlEnv {
       } else { // good
         reward += 100 * (1 - ratio);
       }
-    } 
+    }
 
     return reward;
   }

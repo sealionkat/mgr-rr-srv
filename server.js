@@ -25,7 +25,7 @@ wsServer = new WebSocketServer({
 let connection = null;
 let bot = null;
 
-function originIsAllowed(origin) {
+function originIsAllowed() {
   return true;
 }
 
@@ -70,10 +70,9 @@ wsServer.on('request', function(request) {
               bot = new RlBot();
               break;
             case 'rlc':
-              console.log('Reinforcement Learning bot - learning mode')
-              // todo: use existing rlbot or create new
+              console.log('Reinforcement Learning bot - learning mode');
               if (bot === null) {
-                console.log('creating new bot')
+                console.log('creating new bot');
                 bot = new RlBot();
               } else {
                 console.log('bot was created earlier');
