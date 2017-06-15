@@ -23,6 +23,7 @@ wsServer = new WebSocketServer({
 });
 
 let connection = null;
+let bot = null;
 
 function originIsAllowed(origin) {
   return true;
@@ -37,7 +38,6 @@ wsServer.on('request', function(request) {
   }
 
   connection = request.accept('echo-protocol', request.origin);
-  let bot = null;
   let gameover = false;
   console.log((new Date()) + ' Connection accepted.');
 
@@ -49,6 +49,10 @@ wsServer.on('request', function(request) {
       let timeoutId = null;
 
       switch (data.type) {
+        case RECEIVED_MESSAGES.REPLAY:
+          console.log('replay!');
+          connection.sendUTF(SENT_MESSAGES.HANDSHAKE);
+          break;
         case RECEIVED_MESSAGES.HANDSHAKE:
           console.log('handshake!');
           connection.sendUTF(SENT_MESSAGES.WHICHBOT);
@@ -57,14 +61,22 @@ wsServer.on('request', function(request) {
           console.log('bot!', data.data);
           switch(data.data) {
             case 'random':
+              console.log('Simple bot');
               bot = new SimpleBot();
               break;
             case 'rl':
-              console.log('rl')
+              console.log('Reinforcement Learning bot');
               bot = new RlBot();
               break;
             case 'rlc':
+              console.log('Reinforcement Learning bot - learning mode')
               // todo: use existing rlbot or create new
+              if (bot === null) {
+                console.log('creating new bot')
+                bot = new RlBot();
+              } else {
+                console.log('bot was created earlier');
+              }
               break;
             default:
               console.log('unknown bot', data.data);
@@ -95,6 +107,7 @@ wsServer.on('request', function(request) {
         case RECEIVED_MESSAGES.GAMEOVER:
           clearTimeout(timeoutId);
           gameover = true;
+          bot.gameOver();
           console.log('gameover');
           break;
         default:

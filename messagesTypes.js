@@ -11,7 +11,8 @@ module.exports = {
     PRESSEDRIGHTKEY: 'pressedRightKey',
     RELEASEDLEFTKEY: 'releasedLeftKey',
     RELEASEDRIGHTKEY: 'releasedRightKey',
-    RELEASEDARROWKEY: 'releasedArrowKey'
+    RELEASEDARROWKEY: 'releasedArrowKey',
+    REPLAY: 'replay'
   },
   SENT_MESSAGES: {
     HANDSHAKE: 'handshake',
