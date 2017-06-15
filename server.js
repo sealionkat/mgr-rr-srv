@@ -51,6 +51,7 @@ wsServer.on('request', function(request) {
       switch (data.type) {
         case RECEIVED_MESSAGES.REPLAY:
           console.log('replay!');
+          gameover = false;
           connection.sendUTF(SENT_MESSAGES.HANDSHAKE);
           break;
         case RECEIVED_MESSAGES.HANDSHAKE:
@@ -98,6 +99,7 @@ wsServer.on('request', function(request) {
         case RECEIVED_MESSAGES.RELEASEDLEFTKEY:
         case RECEIVED_MESSAGES.RELEASEDRIGHTKEY:
         case RECEIVED_MESSAGES.RELEASEDARROWKEY:
+          console.log('Multimessage', data.type);
           if(!gameover) {
             timeoutId = setTimeout(() => {
               connection.sendUTF(bot.analyze(data.type, data.data));

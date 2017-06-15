@@ -85,7 +85,7 @@ class RlEnv {
     });
   }
 
-  computeSensorFeedback(playerPos, gameObjects) {
+  computeSensorFeedback(playerPos, gameObjects, playerVel) {
     const sensors = this.sensors;
     const objects = this.filterNearestObjects(playerPos, gameObjects);
     const sensorsFeedback = [];
@@ -147,13 +147,13 @@ class RlEnv {
       }
     });
 
+    sensorsFeedback.push(playerPos.x, playerPos.y, playerVel.x);
+
     return sensorsFeedback;
   }
 
   performEnvironmentActions(data) {
-    const sensorsFeedback = this.computeSensorFeedback(data.playerPos, data.gameObjects);
-
-    return sensorsFeedback;
+    return this.computeSensorFeedback(data.playerPos, data.gameObjects, data.playerVel);
   }
 }
 
