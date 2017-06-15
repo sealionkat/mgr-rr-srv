@@ -68,6 +68,12 @@ class RlBot extends Bot {
     return SENT_MESSAGES.GETGAMESTATE;
   }
 
+  gameOver() {
+    const reward = -100;
+    this.updateReward(reward);
+    this.agent.learn(reward);
+  }
+
   exportData() {
 
   }
