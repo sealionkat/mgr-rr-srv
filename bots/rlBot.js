@@ -2,6 +2,7 @@ const {SENT_MESSAGES} = require('../messagesTypes');
 const Bot = require('./bot');
 const RL = require('../node_modules/reinforcejs/lib/rl');
 const RlEnv = require('./rlEnv');
+const FM = require('../utils/fileManager');
 
 class RlBot extends Bot {
   constructor() {
@@ -73,10 +74,12 @@ class RlBot extends Bot {
     const reward = -100;
     this.updateReward(reward);
     this.agent.learn(reward);
+    this.exportData();
   }
 
   exportData() {
-
+    FM.saveStats('./logs/RL', {actions: this.actions, rewards: this.rewards});
+    FM.saveAgentKnowledge(this.agent.toJSON());
   }
 
   importData() {
