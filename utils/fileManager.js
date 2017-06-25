@@ -51,13 +51,15 @@ const fileSystem = {
 
 const fileManager = {
   saveAgentKnowledge(knowledge) {
-    fileSystem.writeFile('agent-knowledge', knowledge);
+    const timestamp = new Date();
+
+    fileSystem.writeFile(`./knowledge/agent-knowledge-${timestamp}`, knowledge);
   },
   loadAgentKnowledge() {
     fileSystem.readFile('agent-knowledge');
   },
   saveStats(botName, stats) {
-    const timestamp = (new Date()).now();
+    const timestamp = new Date();
 
     fileSystem.writeFile(botName + timestamp, stats);
   },
