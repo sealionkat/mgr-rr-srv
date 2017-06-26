@@ -61,15 +61,16 @@ class RlEnv {
     let reward = 0;
     const playerPosPoint = new Point(playerPos.x, playerPos.y);
     const sensorLength = this.sensorsConfig.len;
-    const sensorDimensionality = this.sensorsConfig.dimensionality;
+    const dimensionality = this.sensorsConfig.dimensionality;
 
-    for(let i = 0; i < sensorsFeedback.length; i += sensorDimensionality) {
-      const distance = playerPosPoint.distanceFromPoint(sensorsFeedback[i], sensorsFeedback[i + 1]);
+    for(let i = 0; i < sensorsFeedback.length; i += dimensionality) {
+      const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]);
+      const distance = playerPosPoint.distanceFromPoint(point);
       const ratio = distance / sensorLength;
 
       if (sensorsFeedback[i + 2] === 1) { // bad
         reward -= 1 - ratio;
-      } else { // good
+      } else if(sensorsFeedback[i + 2] === 0) { // good
         reward += 100 * (1 - ratio);
       }
     }
@@ -129,21 +130,21 @@ class RlEnv {
        - velocity (vx, vy)
        */
       if (nearestObject !== null) {
-        sensorsFeedback.push([
+        sensorsFeedback.push(
           nearestObject.pos.x,
           nearestObject.pos.y,
           nearestObject.localeCompare('enemy') ? 1 : 0,
           nearestObject.vel.x,
           nearestObject.vel.y
-        ]);
+        );
       } else { // what to do if sensor is clean?
-        sensorsFeedback.push([
+        sensorsFeedback.push(
           Number.MAX_SAFE_INTEGER,
           Number.MAX_SAFE_INTEGER,
           -1,
           0,
           0
-        ]);
+        );
       }
     });
 

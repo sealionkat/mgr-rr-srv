@@ -68,4 +68,56 @@ describe('rlEnv', () => {
       }]);
     });
   });
+
+  describe('computeSensorFeedback()', () => {
+    it('should return correct feedback when no data on sensors', () => {
+      const r = new RlEnv();
+      const gameObjects = [{
+        pos: {
+          x: 500,
+          y: 501
+        }
+      }, {
+        pos : {
+          x: 1000,
+          y: 50
+        }
+      }, {
+        pos: {
+          x: 500,
+          y: 500
+        }
+      }];
+
+      r.computeSensors(new Point(0, 0));
+      const filteredObjects = r.filterNearestObjects(new Point(0, 0), gameObjects);
+
+      const feedback = r.computeSensorFeedback(new Point(0, 0), gameObjects, {x: 0, y: 0});
+
+      expect(feedback).to.deep.equal([
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,
+        0,
+        0,
+        0
+      ]);
+
+
+    });
+  });
 });
