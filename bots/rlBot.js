@@ -78,7 +78,7 @@ class RlBot extends Bot {
   }
 
   exportData() {
-    FM.saveStats('./logs/RL', {actions: this.actions, rewards: this.rewards});
+    FM.saveStats('RL', {actions: this.actions, rewards: this.rewards});
     FM.saveAgentKnowledge(this.agent.toJSON());
   }
 
