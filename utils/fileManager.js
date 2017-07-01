@@ -69,15 +69,14 @@ const fileManager = {
   _knowledgeDir: 'knowledge',
   _logsDir: 'logs',
   _knowledgeFilename: 'agent',
+  get timestamp() {
+    return (new Date()).toISOString();
+  },
   saveAgentKnowledge(knowledge) {
-    const timestamp = new Date();
-
-    promisedFM.saveFile(this._knowledgeDir, this._knowledgeFilename + timestamp, knowledge);
+    promisedFM.saveFile(this._knowledgeDir, this._knowledgeFilename + this.timestamp, knowledge);
   },
   saveStats(botName, stats) {
-    const timestamp = new Date();
-
-    promisedFM.saveFile(this._logsDir, botName + timestamp, stats)
+    promisedFM.saveFile(this._logsDir, botName + this.timestamp, stats)
       .then(success => console.log(`Saving file success ${success}`))
       .catch(err => console.log(`Saving file error ${err}`));
   }
