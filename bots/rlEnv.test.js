@@ -91,8 +91,7 @@ describe('rlEnv', () => {
 
       r.computeSensors(new Point(0, 0));
       const filteredObjects = r.filterNearestObjects(new Point(0, 0), gameObjects);
-
-      const feedback = r.computeSensorFeedback(new Point(0, 0), gameObjects, {x: 0, y: 0});
+      const feedback = r.computeSensorFeedback(new Point(0, 0), filteredObjects, {x: 0, y: 0});
 
       expect(feedback).to.deep.equal([
         Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, -1, 0, 0,

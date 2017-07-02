@@ -58,8 +58,7 @@ class RlBot extends Bot {
   }
 
   firstStepMessage(data) {
-    console.warn('first step message', data);
-    /* first action is noop and reward for this action is 0 */
+    // console.warn('first step message', data);
     this.rlEnv.computeSensors(data.playerPos);
 
     const sensorsFeedback = this.rlEnv.performEnvironmentActions(data);

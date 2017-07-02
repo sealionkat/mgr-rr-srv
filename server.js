@@ -42,7 +42,7 @@ wsServer.on('request', function(request) {
   console.log((new Date()) + ' Connection accepted.');
 
   connection.on('message', function(message) {
-    console.log('message', message);
+    // console.log('message', message);
 
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data);
@@ -50,41 +50,41 @@ wsServer.on('request', function(request) {
 
       switch (data.type) {
         case RECEIVED_MESSAGES.REPLAY:
-          console.log('replay!');
+          // console.log('replay!');
           gameover = false;
           connection.sendUTF(SENT_MESSAGES.HANDSHAKE);
           break;
         case RECEIVED_MESSAGES.HANDSHAKE:
-          console.log('handshake!');
+          // console.log('handshake!');
           connection.sendUTF(SENT_MESSAGES.WHICHBOT);
           break;
         case RECEIVED_MESSAGES.BOT:
-          console.log('bot!', data.data);
+          // console.log('bot!', data.data);
           switch(data.data) {
             case 'random':
-              console.log('Simple bot');
+              // console.log('Simple bot');
               bot = new SimpleBot();
               break;
             case 'rl':
-              console.log('Reinforcement Learning bot');
+              // console.log('Reinforcement Learning bot');
               bot = new RlBot();
               break;
             case 'rlc':
-              console.log('Reinforcement Learning bot - learning mode');
+              // console.log('Reinforcement Learning bot - learning mode');
               if (bot === null) {
-                console.log('creating new bot');
+                // console.log('creating new bot');
                 bot = new RlBot();
               } else {
-                console.log('bot was created earlier');
+                // console.log('bot was created earlier');
               }
               break;
             default:
-              console.log('unknown bot', data.data);
+              // console.log('unknown bot', data.data);
           }
           connection.sendUTF(SENT_MESSAGES.BOTCREATED);
           break;
         case RECEIVED_MESSAGES.IDLE:
-          console.log('idle', data.data);
+          // console.log('idle', data.data);
           if(!gameover) {
             timeoutId = setTimeout(() => {
               connection.sendUTF(bot.firstStepMessage(data.data));
@@ -98,7 +98,7 @@ wsServer.on('request', function(request) {
         case RECEIVED_MESSAGES.RELEASEDLEFTKEY:
         case RECEIVED_MESSAGES.RELEASEDRIGHTKEY:
         case RECEIVED_MESSAGES.RELEASEDARROWKEY:
-          console.log('Multimessage', data.type);
+          // console.log('Multimessage', data.type);
           if(!gameover) {
             timeoutId = setTimeout(() => {
               connection.sendUTF(bot.analyze(data.type, data.data));
@@ -109,13 +109,13 @@ wsServer.on('request', function(request) {
           clearTimeout(timeoutId);
           gameover = true;
           bot.gameOver();
-          console.log('gameover');
+          // console.log('gameover');
           break;
         default:
           console.warn('unknown action!', data.type);
       }
     } else { // binary data
-      console.log('gameboard!');
+      // console.log('gameboard!');
       if(!gameover) {
         setTimeout(function () {
           connection.sendUTF(SENT_MESSAGES.GETBOARD);

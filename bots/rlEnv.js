@@ -133,7 +133,7 @@ class RlEnv {
         sensorsFeedback.push(
           nearestObject.pos.x,
           nearestObject.pos.y,
-          nearestObject.localeCompare('enemy') ? 1 : 0,
+          (nearestObject.type.localeCompare('enemy') || nearestObject.type.localeCompare('bulletE')) ? 1 : 0,
           nearestObject.vel.x,
           nearestObject.vel.y
         );
