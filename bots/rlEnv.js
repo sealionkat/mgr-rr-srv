@@ -63,7 +63,7 @@ class RlEnv {
     const sensorLength = this.sensorsConfig.len;
     const dimensionality = this.sensorsConfig.dimensionality;
 
-    for(let i = 0; i < sensorsFeedback.length; i += dimensionality) {
+    for(let i = 0; i < sensorsFeedback.length - 3; i += dimensionality) {
       const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]);
       const distance = playerPosPoint.distanceFromPoint(point);
       const ratio = distance / sensorLength;
@@ -148,7 +148,7 @@ class RlEnv {
       }
     });
 
-    sensorsFeedback.push(playerPos.x, playerPos.y, playerVel.x);
+    sensorsFeedback.push(playerPos.x, playerPos.y, playerVel);
 
     return sensorsFeedback;
   }
