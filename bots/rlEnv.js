@@ -86,7 +86,13 @@ class RlEnv {
     });
   }
 
-  computeSensorFeedback(playerPos, gameObjects, playerVel) {
+  findIntersectionWithEdge(sensorSegment, leftEdge, rightEdge) {
+    let intersectionPoint = null;
+
+    return intersectionPoint;
+  }
+
+  computeSensorFeedback(playerPos, gameObjects, playerVel, leftEdge, rightEdge) {
     const sensors = this.sensors;
     const objects = this.filterNearestObjects(playerPos, gameObjects);
     const sensorsFeedback = [];
@@ -126,7 +132,7 @@ class RlEnv {
 
       /*
       - range (x, y)
-       - type {0, 1}, 0 - good, 1 - bad
+       - type {0, 1, 2}, 0 - good, 1 - bad, 2 - wall/edge/bank
        - velocity (vx, vy)
        */
       if (nearestObject !== null) {
@@ -138,13 +144,25 @@ class RlEnv {
           nearestObject.vel.y
         );
       } else { // what to do if sensor is clean?
-        sensorsFeedback.push(
-          Number.MAX_SAFE_INTEGER,
-          Number.MAX_SAFE_INTEGER,
-          -1,
-          0,
-          0
-        );
+        // check intersection with edge
+        const intersectionPoint = this.findIntersectionWithEdge(sensorSegment, leftEdge, rightEdge);
+        if (intersectionPoint !== null) {
+          sensorsFeedback.push(
+            intersectionPoint.x,
+            intersectionPoint.y,
+            2,
+            0,
+            0
+          );
+        } else {
+          sensorsFeedback.push( // sensor is clear
+            Number.MAX_SAFE_INTEGER,
+            Number.MAX_SAFE_INTEGER,
+            -1,
+            0,
+            0
+          );
+        }
       }
     });
 
@@ -153,8 +171,8 @@ class RlEnv {
     return sensorsFeedback;
   }
 
-  performEnvironmentActions(data) {
-    return this.computeSensorFeedback(data.playerPos, data.gameObjects, data.playerVel);
+  performEnvironmentActions(data, leftEdge, rightEdge) {
+    return this.computeSensorFeedback(data.playerPos, data.gameObjects, data.playerVel, leftEdge, rightEdge);
   }
 }
 

@@ -16,6 +16,8 @@ class RlBot extends Bot {
     this.rewards = [];
     this.actions = [];
     this.lastSensorsFeedback = null;
+    this.leftGroundPos = null;
+    this.rightGroundPos = null;
 
     super.sayHello('Reinforcement Learning Bot');
   }
@@ -60,8 +62,10 @@ class RlBot extends Bot {
   firstStepMessage(data) {
     // console.warn('first step message', data);
     this.rlEnv.computeSensors(data.playerPos);
+    this.leftGroundPos = data.boardSizes[0] + data.groundWidth;
+    this.rightGroundPos = data.boardSizes[2] - data.groundWidth;
 
-    const sensorsFeedback = this.rlEnv.performEnvironmentActions(data);
+    const sensorsFeedback = this.rlEnv.performEnvironmentActions(data, this.leftGroundPos, this.rightGroundPos);
     const action = this.agent.act(sensorsFeedback);
     this.lastSensorsFeedback = sensorsFeedback;
     this.updateAction(action);
