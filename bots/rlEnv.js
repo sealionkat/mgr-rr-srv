@@ -143,7 +143,7 @@ class RlEnv {
           nearestObject.vel.x,
           nearestObject.vel.y
         );
-      } else { // what to do if sensor is clean?
+      } else {
         // check intersection with edge
         const intersectionPoint = this.findIntersectionWithEdge(sensorSegment, leftEdge, rightEdge);
         if (intersectionPoint !== null) {
@@ -154,8 +154,8 @@ class RlEnv {
             0,
             0
           );
-        } else {
-          sensorsFeedback.push( // sensor is clear
+        } else { // sensor is clear
+          sensorsFeedback.push(
             Number.MAX_SAFE_INTEGER,
             Number.MAX_SAFE_INTEGER,
             -1,
@@ -172,6 +172,8 @@ class RlEnv {
   }
 
   performEnvironmentActions(data, leftEdge, rightEdge) {
+
+
     return this.computeSensorFeedback(data.playerPos, data.gameObjects, data.playerVel, leftEdge, rightEdge);
   }
 }

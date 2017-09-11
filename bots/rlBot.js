@@ -73,15 +73,21 @@ class RlBot extends Bot {
     return SENT_MESSAGES.GETGAMESTATE;
   }
 
-  gameOver() {
+  gameOver(data) {
     const reward = -100;
     this.updateReward(reward);
     this.agent.learn(reward);
-    this.exportData();
+    this.exportData(data);
   }
 
-  exportData() {
-    FM.saveStats('RL', {actions: this.actions, rewards: this.rewards});
+  exportData(gameData) {
+    FM.saveStats('RL', {
+      actions: this.actions,
+      rewards: this.rewards,
+      score: gameData.score,
+      time: gameData.time,
+      fuel: gameData.fuel
+    });
     FM.saveAgentKnowledge(this.agent.toJSON());
   }
 

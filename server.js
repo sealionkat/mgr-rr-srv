@@ -108,8 +108,7 @@ wsServer.on('request', function(request) {
         case RECEIVED_MESSAGES.GAMEOVER:
           clearTimeout(timeoutId);
           gameover = true;
-          bot.gameOver();
-          // console.log('gameover');
+          bot.gameOver(data.data);
           break;
         default:
           console.warn('unknown action!', data.type);
