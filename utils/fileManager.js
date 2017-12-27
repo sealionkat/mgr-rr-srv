@@ -70,7 +70,7 @@ const fileManager = {
   _logsDir: 'logs',
   _knowledgeFilename: 'agent',
   get timestamp() {
-    return (new Date()).toISOString();
+    return Date.now();
   },
   saveAgentKnowledge(knowledge) {
     promisedFM.saveFile(this._knowledgeDir, this._knowledgeFilename + this.timestamp, knowledge);
