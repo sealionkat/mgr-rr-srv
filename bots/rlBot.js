@@ -61,6 +61,8 @@ class RlBot extends Bot {
 
   firstStepMessage(data) {
     // console.warn('first step message', data);
+    this.actions = [];
+    this.rewards = [];
     this.rlEnv.computeSensors(data.playerPos);
     this.leftGroundPos = data.boardSizes[0] + data.groundWidth;
     this.rightGroundPos = data.boardSizes[2] - data.groundWidth;
