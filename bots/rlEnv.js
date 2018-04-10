@@ -49,7 +49,7 @@ class RlEnv {
     const {x, y} = playerPos;
     let alpha = 0;
 
-    for(let i = 0; i <= sectorsCount; ++i, alpha += sectorAngle) {
+    for(let i = 0; i <= sectorsCount; ++i, alpha = i * sectorAngle) {
       const result = new Point(geo.computeSecondArcPoint(x, y, alpha, sensorsConfig.len));
       sensors.push(result);
     }
