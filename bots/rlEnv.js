@@ -18,7 +18,7 @@ const defaultSpec = {
 class RlEnv {
   constructor() {
     this.sensorsConfig = {
-      count: 17,
+      count: 35,
       len: 100,
       dimensionality: 5
     };
