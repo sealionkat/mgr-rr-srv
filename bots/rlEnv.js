@@ -67,11 +67,12 @@ class RlEnv {
       const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]);
       const distance = playerPosPoint.distanceFromPoint(point);
       const ratio = distance / sensorLength;
+      const reversedRatio = 1 - ratio;
 
       if (sensorsFeedback[i + 2] === 1) { // bad
-        reward -= (1 - ratio) * (1 - ratio);
+        reward -= reversedRatio * reversedRatio;
       } else if(sensorsFeedback[i + 2] === 0) { // good
-        reward += 100 * ((1 - ratio) * (1 - ratio));
+        reward += 100 * (reversedRatio * reversedRatio);
       }
     }
 
