@@ -69,9 +69,9 @@ class RlEnv {
       const ratio = distance / sensorLength;
 
       if (sensorsFeedback[i + 2] === 1) { // bad
-        reward -= 1 - ratio;
+        reward -= (1 - ratio) * (1 - ratio);
       } else if(sensorsFeedback[i + 2] === 0) { // good
-        reward += 100 * (1 - ratio);
+        reward += 100 * ((1 - ratio) * (1 - ratio));
       }
     }
 
