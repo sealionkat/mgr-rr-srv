@@ -15,6 +15,7 @@ class RlBot extends Bot {
     this.lastAction = null;
     this.rewards = [];
     this.actions = [];
+    this.objects = [];
     this.lastSensorsFeedback = null;
     this.leftGroundPos = null;
     this.rightGroundPos = null;
@@ -32,6 +33,10 @@ class RlBot extends Bot {
     this.actions.push(action);
   }
 
+  updateObjects(objects) {
+    this.objects.push(objects);
+  }
+
   analyze(receivedMessage, data) {
     const reward = this.rlEnv.computeReward(this.lastSensorsFeedback, data.playerPos);
     this.updateReward(reward);
@@ -41,6 +46,7 @@ class RlBot extends Bot {
     this.lastSensorsFeedback = sensorsFeedback;
     const action = this.agent.act(sensorsFeedback);
     this.updateAction(action);
+    this.updateObjects(data.gameObjects)
     console.log('show action', action);
     /*
     0 - noop
@@ -63,6 +69,7 @@ class RlBot extends Bot {
     // console.warn('first step message', data);
     this.actions = [];
     this.rewards = [];
+    this.objects = [];
     this.rlEnv.computeSensors(data.playerPos);
     this.leftGroundPos = data.boardSizes[0] + data.groundWidth;
     this.rightGroundPos = data.boardSizes[2] - data.groundWidth;
@@ -86,6 +93,7 @@ class RlBot extends Bot {
     FM.saveStats('RL', {
       actions: this.actions,
       rewards: this.rewards,
+      objects: this.objects,
       score: gameData.score,
       time: gameData.time,
       fuel: gameData.fuel

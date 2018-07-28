@@ -18,7 +18,7 @@ const defaultSpec = {
 class RlEnv {
   constructor() {
     this.sensorsConfig = {
-      count: 17,
+      count: 35,
       len: 100,
       dimensionality: 5
     };
@@ -49,7 +49,7 @@ class RlEnv {
     const {x, y} = playerPos;
     let alpha = 0;
 
-    for(let i = 0; i <= sectorsCount; ++i, alpha += sectorAngle) {
+    for(let i = 0; i <= sectorsCount; ++i, alpha = i * sectorAngle) {
       const result = new Point(geo.computeSecondArcPoint(x, y, alpha, sensorsConfig.len));
       sensors.push(result);
     }
@@ -67,11 +67,12 @@ class RlEnv {
       const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]);
       const distance = playerPosPoint.distanceFromPoint(point);
       const ratio = distance / sensorLength;
+      const reversedRatio = 1 - ratio;
 
       if (sensorsFeedback[i + 2] === 1) { // bad
-        reward -= 1 - ratio;
+        reward -= reversedRatio * reversedRatio;
       } else if(sensorsFeedback[i + 2] === 0) { // good
-        reward += 100 * (1 - ratio);
+        reward += 100 * (reversedRatio * reversedRatio);
       }
     }
 
