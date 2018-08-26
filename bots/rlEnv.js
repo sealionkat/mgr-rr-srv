@@ -39,6 +39,9 @@ class RlEnv {
     this.spec = spec;
     this.env = env;
     this.computeSensors = this.computeSensors.bind(this);
+    this.computeReward = this.computeReward.bind(this);
+    this.filterNearestObjects = this.filterNearestObjects.bind(this);
+    this.computeSensorFeedback = this.computeSensorFeedback.bind(this);
   }
 
   computeSensors(playerPos) {
