@@ -5,18 +5,20 @@ const RlEnv = require('./rlEnv');
 const Point = require('../utils/Point');
 
 describe('rlEnv', () => {
+  const expectedSensorConfig = {
+    count: 35,
+    dimensionality: 5,
+    len: 100
+  };
+
   describe('constructor()', () => {
     it('should create proper object', () => {
       const r = new RlEnv();
       const {env, sensorsConfig} = r;
 
-      expect(sensorsConfig).to.be.deep.equal({
-        count: 17,
-        dimensionality: 5,
-        len: 100
-      });
+      expect(sensorsConfig).to.be.deep.equal(expectedSensorConfig);
       expect(env.getMaxNumActions()).to.be.equal(3);
-      expect(env.getNumStates()).to.be.equal(88);
+      expect(env.getNumStates()).to.be.equal(expectedSensorConfig.count * expectedSensorConfig.dimensionality + 3);
     });
   });
 
@@ -26,9 +28,9 @@ describe('rlEnv', () => {
       r.computeSensors(new Point(0, 0));
       const sensors = r.sensors;
 
-      expect(sensors).to.have.length(17);
+      expect(sensors).to.have.length(expectedSensorConfig.count);
       expect(sensors[0]).to.deep.equal(new Point(-100, 0));
-      expect(sensors[16]).to.deep.equal(new Point(100, 0));
+      expect(sensors[expectedSensorConfig.count - 1]).to.deep.equal(new Point(100, 0));
     });
   });
 
