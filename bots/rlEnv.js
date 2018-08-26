@@ -6,13 +6,13 @@ const Segment = require('../utils/Segment');
 const defaultSpec = {
   update: 'qlearn', // qlearn | sarsa
   gamma: 0.9, // discount factor, [0, 1)
-  epsilon: 0.2, // initial epsilon for epsilon-greedy policy, [0, 1)
-  alpha: 0.01, // value function learning rate
+  epsilon: 0.9, // initial epsilon for epsilon-greedy policy, [0, 1)
+  alpha: 0.1, // value function learning rate
   experience_add_every: 10, // number of time steps before we add another experience to replay memory
-  experience_size: 5000, // size of experience replay memory
+  experience_size: 500, // size of experience replay memory
   learning_steps_per_iteration: 20,
   tderror_clamp: 1.0, // for robustness
-  num_hidden_units: 100 // number of neurons in hidden layer
+  num_hidden_units: 300 // number of neurons in hidden layer
 };
 
 class RlEnv {
