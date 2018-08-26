@@ -46,8 +46,8 @@ class RlBot extends Bot {
     this.lastSensorsFeedback = sensorsFeedback;
     const action = this.agent.act(sensorsFeedback);
     this.updateAction(action);
-    this.updateObjects(data.gameObjects)
-    console.log('show action', action);
+    this.updateObjects(data.gameObjects);
+    //console.log('show action', action);
     /*
     0 - noop
     1 - left
