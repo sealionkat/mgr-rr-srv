@@ -93,10 +93,11 @@ class RlBot extends Bot {
     FM.saveStats('RL', {
       actions: this.actions,
       rewards: this.rewards,
-      objects: this.objects,
+      //objects: this.objects,
       score: gameData.score,
       time: gameData.time,
-      fuel: gameData.fuel
+      fuel: gameData.fuel,
+      sensorsFeedback: this.lastSensorsFeedback
     });
     FM.saveAgentKnowledge(this.agent.toJSON());
   }
