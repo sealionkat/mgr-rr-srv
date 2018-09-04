@@ -170,7 +170,7 @@ class RlEnv {
       }
     });
 
-    sensorsFeedback.push(playerPos.x, playerPos.y, playerVel.x);
+    sensorsFeedback.push(playerPos.x, playerPos.y, playerVel);
 
     return sensorsFeedback;
   }
