@@ -134,6 +134,9 @@ class RlEnv {
         });
       });
 
+      //todo: normalization of MAX/positions
+      // normalization parameters divistion
+
       /*
       - range (x, y)
        - type {0, 1, 2}, 0 - good, 1 - bad, 2 - wall/edge/bank
