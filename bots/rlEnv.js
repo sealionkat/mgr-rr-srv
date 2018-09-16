@@ -2,6 +2,7 @@
 const geo = require('../utils/geo');
 const Point = require('../utils/Point');
 const Segment = require('../utils/Segment');
+const MathExp = require('../utils/MathExp');
 
 const defaultSpec = {
   update: 'qlearn', // qlearn | sarsa
@@ -14,6 +15,10 @@ const defaultSpec = {
   tderror_clamp: 1.0, // for robustness
   num_hidden_units: 100 // number of neurons in hidden layer
 };
+
+const normalizePosX = MathExp.normalizeCurried(450, 30);
+const normalizePosY = MathExp.normalizeCurried(800, 0);
+const normalizeVec = MathExp.normalizeCurried(-1, 1);
 
 class RlEnv {
   constructor() {
@@ -144,27 +149,27 @@ class RlEnv {
        */
       if (nearestObject !== null) {
         sensorsFeedback.push(
-          nearestObject.pos.x,
-          nearestObject.pos.y,
+          normalizePosX(nearestObject.pos.x),
+          normalizePosY(nearestObject.pos.y),
           (nearestObject.type.localeCompare('enemy') || nearestObject.type.localeCompare('bulletE')) ? 1 : 0,
-          nearestObject.vel.x,
-          nearestObject.vel.y
+          normalizeVec(nearestObject.vel.x),
+          normalizeVec(nearestObject.vel.y)
         );
       } else {
         // check intersection with edge
         const intersectionPoint = this.findIntersectionWithEdge(sensorSegment, leftEdge, rightEdge);
         if (intersectionPoint !== null) {
           sensorsFeedback.push(
-            intersectionPoint.x,
-            intersectionPoint.y,
+            normalizePosX(intersectionPoint.x),
+            normalizePosY(intersectionPoint.y),
             2,
             0,
             0
           );
         } else { // sensor is clear
           sensorsFeedback.push(
-            Number.MAX_SAFE_INTEGER,
-            Number.MAX_SAFE_INTEGER,
+            1, // max
+            1, // max
             -1,
             0,
             0
@@ -173,7 +178,7 @@ class RlEnv {
       }
     });
 
-    sensorsFeedback.push(playerPos.x, playerPos.y, playerVel);
+    sensorsFeedback.push(normalizePosX(playerPos.x), normalizePosY(playerPos.y), normalizeVec(playerVel));
 
     return sensorsFeedback;
   }
