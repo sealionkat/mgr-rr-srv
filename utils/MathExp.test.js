@@ -47,5 +47,5 @@ describe('Math expanded', () => {
       expect(nmCurried(50)).to.be.equal(0.5);
       expect(nmCurried2(0)).to.be.equal(0.5);
     });
-  })
+  });
 });
