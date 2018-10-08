@@ -21,8 +21,8 @@ const normalizePosY = MathExp.normalizeCurried(800, 0);
 const normalizeVec = MathExp.normalizeCurried(-1, 1);
 
 class RlEnv {
-  constructor() {
-    this.sensorsConfig = {
+  constructor(config) {
+    this.sensorsConfig = config ? config : {
       count: 35,
       len: 100,
       dimensionality: 5
