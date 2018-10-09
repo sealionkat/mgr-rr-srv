@@ -139,8 +139,11 @@ class RlEnv {
         });
       });
 
-      //todo: normalization of MAX/positions
-      // normalization parameters divistion
+      /*
+      TODO: test with parameters:
+      - vx, vy of observed object (2 fields)
+      - for each type of object (good/bad/rest) should be set normalized distance from Player; if clean - set 1.0
+      */
 
       /*
       - range (x, y)
