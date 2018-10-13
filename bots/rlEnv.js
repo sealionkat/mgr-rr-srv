@@ -20,6 +20,8 @@ const normalizePosX = MathExp.normalizeCurried(450, 30);
 const normalizePosY = MathExp.normalizeCurried(800, 0);
 const normalizeVec = MathExp.normalizeCurried(-1, 1);
 
+const normalizeSensorDistance = MathExp.normalizeCurried(100, 0);
+
 class RlEnv {
   constructor(config) {
     this.sensorsConfig = config ? config : {
@@ -151,33 +153,32 @@ class RlEnv {
        - velocity (vx, vy)
        */
       if (nearestObject !== null) {
+        let goodDistance = 1.0;
+        let badDistance = 1.0;
+        let wallDistance = 1.0;
+        const objectType = nearestObject.type;
+
+        if (objectType.localeCompare('enemy') || objectType.localeCompare('bulletE')) { // bad item
+          badDistance = normalizeSensorDistance(minDistance);
+        } else { // good item
+          goodDistance = normalizeSensorDistance(minDistance);
+        }
+
         sensorsFeedback.push(
-          normalizePosX(nearestObject.pos.x),
-          normalizePosY(nearestObject.pos.y),
-          (nearestObject.type.localeCompare('enemy') || nearestObject.type.localeCompare('bulletE')) ? 1 : 0,
-          normalizeVec(nearestObject.vel.x),
-          normalizeVec(nearestObject.vel.y)
+          goodDistance,
+          badDistance,
+          wallDistance,
+          nearestObject.vel.x,
+          nearestObject.vel.y
         );
       } else {
-        // check intersection with edge
-        const intersectionPoint = this.findIntersectionWithEdge(sensorSegment, leftEdge, rightEdge);
-        if (intersectionPoint !== null) {
-          sensorsFeedback.push(
-            normalizePosX(intersectionPoint.x),
-            normalizePosY(intersectionPoint.y),
-            2,
-            0,
-            0
-          );
-        } else { // sensor is clear
-          sensorsFeedback.push(
-            1, // max
-            1, // max
-            -1,
-            0,
-            0
-          );
-        }
+        sensorsFeedback.push(
+          1.0,
+          1.0,
+          1.0,
+          0,
+          0
+        );
       }
     });
 
