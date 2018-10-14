@@ -42,7 +42,7 @@ class RlBot extends Bot {
     this.updateReward(reward);
     this.agent.learn(reward);
 
-    const sensorsFeedback = this.rlEnv.performEnvironmentActions(data);
+    const sensorsFeedback = this.rlEnv.performEnvironmentActions(data, 30, 450);
     this.lastSensorsFeedback = sensorsFeedback;
     const action = this.agent.act(sensorsFeedback);
     this.updateAction(action);
