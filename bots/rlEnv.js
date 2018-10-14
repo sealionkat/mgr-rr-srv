@@ -104,6 +104,9 @@ class RlEnv {
   }
 
   computeSensorFeedback(playerPos, gameObjects, playerVel, leftEdge, rightEdge) {
+    const leftSegment = new Segment(new Point(leftEdge, 0), new Point(leftEdge, 800));
+    const rightSegment = new Segment(new Point(rightEdge, 0), new Point(rightEdge, 800));
+
     const sensors = this.sensors;
     const objects = this.filterNearestObjects(playerPos, gameObjects);
     const sensorsFeedback = [];
@@ -171,11 +174,21 @@ class RlEnv {
           nearestObject.vel.x,
           nearestObject.vel.y
         );
-      } else {
+      } else { // check intersection with walls
+        let wallDistance = 1.0;
+        const leftSegmentIntersectionPoint = sensorSegment.findIntersectionPoint(leftSegment);
+        const rightSegmentIntersectionPoint = sensorSegment.findIntersectionPoint(rightSegment);
+
+        if (leftSegmentIntersectionPoint !== null) {
+          wallDistance = normalizeSensorDistance(playerPosPoint.distanceFromPoint(leftSegmentIntersectionPoint));
+        } else if (rightSegmentIntersectionPoint !== null) {
+          wallDistance = normalizeSensorDistance(playerPosPoint.distanceFromPoint(rightSegmentIntersectionPoint));
+        }
+
         sensorsFeedback.push(
           1.0,
           1.0,
-          1.0,
+          wallDistance,
           0,
           0
         );
@@ -188,8 +201,6 @@ class RlEnv {
   }
 
   performEnvironmentActions(data, leftEdge, rightEdge) {
-
-
     return this.computeSensorFeedback(data.playerPos, data.gameObjects, data.playerVel, leftEdge, rightEdge);
   }
 }
