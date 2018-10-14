@@ -74,7 +74,7 @@ class RlEnv {
     const dimensionality = this.sensorsConfig.dimensionality;
 
     for(let i = 0; i < sensorsFeedback.length - 3; i += dimensionality) {
-      const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]);
+      const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]); // here is bug
       const distance = playerPosPoint.distanceFromPoint(point);
       const ratio = distance / sensorLength;
       const reversedRatio = 1 - ratio;
