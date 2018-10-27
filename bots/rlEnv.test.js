@@ -96,28 +96,57 @@ describe('rlEnv', () => {
       const feedback = r.computeSensorFeedback(new Point(0, 0), filteredObjects, 0);
 
       expect(feedback).to.deep.equal([
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
-        1, 1, -1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        1, 1, 1, 0, 0,
+        -0.0714,
         0,
-        0,
-        0
+        0.5
       ]);
 
+
+    });
+
+    it('should return feedback when data on sensor', () => {
+      const r = new RlEnv({count: 17, len: 100, dimensionality: 5});
+      const gameObjects = [{
+        pos: {
+          x: 500,
+          y: 501
+        },
+        type: 'enemy'
+      }, {
+        pos : {
+          x: 1000,
+          y: 50
+        }
+      }, {
+        pos: {
+          x: 500,
+          y: 500
+        }
+      }];
+      const playerPos = new Point(550, 500);
+
+      r.computeSensors(playerPos);
+      const filteredObjects = r.filterNearestObjects(playerPos, gameObjects);
+      const feedback = r.computeSensorFeedback(playerPos, filteredObjects, 0);
+
+      expect(feedback).to.be.equal([])
 
     });
   });

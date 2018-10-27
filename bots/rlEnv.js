@@ -74,16 +74,21 @@ class RlEnv {
     const dimensionality = this.sensorsConfig.dimensionality;
 
     for(let i = 0; i < sensorsFeedback.length - 3; i += dimensionality) {
-      const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]); // here is bug
-      const distance = playerPosPoint.distanceFromPoint(point);
-      const ratio = distance / sensorLength;
-      const reversedRatio = 1 - ratio;
-
-      if (sensorsFeedback[i + 2] === 1) { // bad
-        reward -= reversedRatio * reversedRatio;
-      } else if(sensorsFeedback[i + 2] === 0) { // good
-        reward += 100 * (reversedRatio * reversedRatio);
+      if (sensorsFeedback[i] < 1.0) { // good
+        reward += 100;
+      } else if (sensorsFeedback[i + 1] < 1.0) { // bad
+        reward -= 1.0;
       }
+      // const point = new Point(sensorsFeedback[i], sensorsFeedback[i + 1]); // here is bug
+      // const distance = playerPosPoint.distanceFromPoint(point);
+      // const ratio = distance / sensorLength;
+      // const reversedRatio = 1 - ratio;
+
+      // if (sensorsFeedback[i + 2] === 1) { // bad
+      //   reward -= reversedRatio * reversedRatio;
+      // } else if(sensorsFeedback[i + 2] === 0) { // good
+      //   reward += 100 * (reversedRatio * reversedRatio);
+      // }
     }
 
     return reward;
@@ -111,6 +116,8 @@ class RlEnv {
     const objects = this.filterNearestObjects(playerPos, gameObjects);
     const sensorsFeedback = [];
     const playerPosPoint = new Point(playerPos.x, playerPos.y);
+
+    console.log('sensors', sensors, objects)
 
     sensors.forEach(sensor => {
       let minDistance = Number.MAX_SAFE_INTEGER; // search for nearest object;
@@ -156,6 +163,7 @@ class RlEnv {
        - velocity (vx, vy)
        */
       if (nearestObject !== null) {
+        console.log('not null', JSON.stringify(nearestObject))
         let goodDistance = 1.0;
         let badDistance = 1.0;
         let wallDistance = 1.0;
