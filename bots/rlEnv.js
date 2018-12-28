@@ -60,7 +60,7 @@ class RlEnv {
     let alpha = 0;
 
     for(let i = 0; i <= sectorsCount; ++i, alpha = i * sectorAngle) {
-      const result = new Point(geo.computeSecondArcPoint(x, y, alpha, sensorsConfig.len));
+      const result = new Point(geo.computeSecondArcPoint(x, y, -alpha, sensorsConfig.len));
       sensors.push(result);
     }
 
