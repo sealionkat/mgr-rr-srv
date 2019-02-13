@@ -26,7 +26,7 @@ class RlEnv {
   constructor(config) {
     this.sensorsConfig = config ? config : {
       count: 35,
-      len: 100,
+      len: 150,
       dimensionality: 5
     };
     this.sensors = []; // array of Point
