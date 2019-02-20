@@ -16,19 +16,21 @@ const defaultSpec = {
   num_hidden_units: 100 // number of neurons in hidden layer
 };
 
+const defaultConfig = {
+  count: 35,
+  len: 150,
+  dimensionality: 5
+};
+
 const normalizePosX = MathExp.normalizeCurried(450, 30);
 const normalizePosY = MathExp.normalizeCurried(800, 0);
 const normalizeVec = MathExp.normalizeCurried(-1, 1);
 
-const normalizeSensorDistance = MathExp.normalizeCurried(100, 0);
+let normalizeSensorDistance = null;
 
 class RlEnv {
   constructor(config) {
-    this.sensorsConfig = config ? config : {
-      count: 35,
-      len: 150,
-      dimensionality: 5
-    };
+    this.sensorsConfig = config ? config : defaultConfig;
     this.sensors = []; // array of Point
     const spec = defaultSpec;
     const env = {};
@@ -42,6 +44,8 @@ class RlEnv {
     2 - right
      */
     env.getMaxNumActions = () => 3;
+
+    normalizeSensorDistance = MathExp.normalizeCurried(this.sensorsConfig.len, 0);
 
     this.spec = spec;
     this.env = env;
